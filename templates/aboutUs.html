@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	{% block title %} About Us {% endblock %}
+	<link rel="stylesheet" href="aboutUs.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+<style>
+{% block css %}
+.outer{
+    height: 100vh;
+    width: 100vw;
+    background-color: #071F30;
+    place-items: center;
+    display: grid;
+}
+.inner{
+    background: linear-gradient(rgb(202, 184, 187),rgb(238, 196, 200));
+    text-align: center;
+    padding: 30px 80px;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 540px;
+    width: 600px;
+    box-shadow: 0 10px 10px -0.7px rgba(90, 36, 36, 0.5);
+}
+.inner h1{
+    padding-top: 7px;
+    font-family: 'Pushster', cursive;
+    font-size: 40px;
+    padding-bottom: 10px;
+    color: purple;
+}
+.inner h3{
+    font-family: 'Merriweather', serif;
+    font-size:20px;
+    font-weight: bold;
+    padding-bottom: 5px;
+	color: black;
+}
+.inner h4{
+    font-family: 'Moon Dance', cursive;
+    font-size: 20px;
+    font-weight: bold;
+    padding-bottom: 10px;
+	color: blueviolet;
+}
+.inner h2{
+    font-size: 12px;
+    font-weight: bold;
+    padding-bottom: 30px;
+    font-family: 'Merriweather', serif;
+	color: crimson;
+}
+.btn{
+    text-align: center;
+    height: 35px;
+    width: 100px;
+    border-radius: 1px;
+    border-color: rgb(45, 48, 48);
+    transform: scale(1.15);
+    font-family: 'Libre Baskerville', serif;
+    background-color: #ee0b34;
+    color: white;
+}
+.btn:hover{
+    background-color: rgb(13, 187, 13);
+}
+#about{
+    padding-top: 30px;
+    display: none;
+}
+.p1{
+    font-size: 20px;
+    font-family: 'Libre Baskerville', serif;
+    text-align: center;	
+}
+.p2{
+    font-size: 20px;
+    font-family: 'Libre Baskerville', serif;
+    text-align: center;
+}
+.info{
+    background: linear-gradient(rgb(82, 5, 82),rgb(99, 4, 107));
+    color: white;
+}
+img{
+    height: 20px;
+    width: 30px;
+}
+{% endblock %}
+</style>
+</head>
+<body>
+	{% block content %}
+<div class="outer">
+	<div class="inner">
+		<h1>About Us</h1>
+		<h3>Created By:</h3>
+		<h4>Sankalp Betkar & Tejas Bhuwad</h4>
+		<h2>You may be wondering why we created this website? We all play games every day, whatever they may be,
+			and you feel comfortable playing such games. That's what we thought, and we decided to make a small website. 
+			In the beginning we had to face a lot of difficulties, so what technology should we use? What would be the logic behind it? 
+			and what to make of it? That's all going on in our heads. For this we enlisted the help of YouTube and Google. 
+			Faced with a lot of difficulties, we created this small website.</h2>
+		<button class="btn" onclick="show()">More</button>
+		<div id="about">
+			<div class="info">
+				<p class="p1">
+			Sankalp Betkar<br>
+			Follow on<br>
+			<a href="#"><img src="{% static 'images/fb.png' %}"></a>
+			<a href="#"><img src="{% static 'images/insta.png' %}"></a>
+			<a href="#"><img src="{% static 'images/linkedin.jpeg' %}"></a>
+		</p>
+		<p class="p2">
+			Tejas Bhuwad<br>
+			Follow on<br>
+			<a onclick="location.href='https://www.facebook.com/tejas.bhuwad.585/'"><img src="{% static 'images/fb.png' %}"></a>
+			<a onclick="location.href='https://www.instagram.com/tejas_r_bhuwad_014/'"><img src="{% static 'images/insta.png'%}"></a>
+			<a onclick="location.href='https://www.linkedin.com/in/tejas-bhuwad-a142b8216/'"><img src="{% static 'images/linkedin.jpeg'%}"></a>
+		</p>
+			</div>
+	</div>
+	</div>
+</div>
+</body>
+<script>
+function show(){
+	const about = document.querySelector('#about');
+	if(about.style.display == "none")
+ 	{
+		about.style.display = "block";
+	}
+	else
+	{
+        about.style.display = "none";
+    }
+	}
+</script>
+{% endblock %}
+</html>

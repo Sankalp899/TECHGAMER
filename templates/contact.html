@@ -1,0 +1,173 @@
+ {% extends 'base.html' %}
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    {% block title %} Contact Us {% endblock %}
+    <link href="https://fonts.googleapis.com/css2?family=Praise&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+<title>ConatctUs</title>
+<style>
+    {% block css %}
+*
+{
+margin: 0;
+padding: 0;
+}
+body
+{
+background-color:  #071F30;
+font-family: sans-serif;
+}
+.shape img{
+    position: absolute;
+    width: 100%;
+    z-index: -9;
+}
+.shape .shape1{
+    right: -160px;
+    top: -50px;
+    width: 450px;
+    opacity: .5;
+    transform-origin: center;
+    animation: shape linear 30s infinite reverse;
+}
+.shape .shape2{
+    left: -70px;
+    bottom: -50px;
+    width: 450px;
+    opacity: .5;
+    transform-origin: center;
+    animation: shape linear 30s infinite reverse;
+}
+@keyframes shape{
+    100%{
+        transform:  rotate(360deg);
+    }
+}
+
+.shape .shape3{
+    top: 0;
+    left: 0;
+    width: 250px;
+    opacity: .4;
+    transform-origin: center;
+    animation: shape3 linear 20s infinite;
+    transform: translate(-200px, -100px) rotate(0deg);
+}
+@keyframes shape3{
+    100%{
+        transform: translate(1300px, 600px) rotate(360deg);
+    }	
+}
+
+.shape .shape4{
+    left: 0;
+    bottom: 0;
+    width: 150px;
+    opacity: .4;
+    transform-origin: center;
+    animation: shape4 linear 20s infinite 5s;
+    transform: translate(700px, 80px) rotate(0deg);
+}
+@keyframes shape4{
+    100%{
+        transform: translate(1200px, -800px) rotate(360deg);
+    }
+}
+
+.shape .shape5{
+    left: 500px;
+    top: 0;
+    width: 100px;
+    opacity: 0;
+    transform-origin: center;
+    animation: shape5 linear 25s infinite;
+    transform: translate(0, -150px) rotate(0deg);
+}
+@keyframes shape5{
+    100%{
+        opacity: 1;
+        transform: translate(0, 800px) rotate(720deg);
+    }
+}
+.contact-box
+{
+width: 500px;
+box-shadow: 0 0 70px 0 #999;
+top: 20%;
+left: 35%;
+position: absolute;
+}
+.contact-box h1
+{
+    padding-top: 7px;
+    font-family: 'Pushster', cursive;
+    font-size: 40px;
+    padding-left: 170px;
+    color: purple;
+}
+form
+{
+margin: 35px;
+}
+.input-field
+{
+width: 400px;
+height: 40px;
+margin-top: 20px;
+padding-left: 10px;
+border: 1px solid #7777;
+border-radius: 14px;
+outline: none;
+}
+.textarea-field
+{
+height: 150px;
+padding-top: 10px;
+}
+.btn
+{
+border-radius: 30px;
+color: #fff;
+margin-top: 18px;
+margin-left: 180px;
+padding: 10px;
+background-color: #47c35a;
+font-size: 18px;
+border: none;
+cursor: pointer;
+
+}
+{% endblock %}
+</style>
+</head>
+<body>
+    {% block content %}
+        <div class="shape">
+            <img class="shape1" src="{% static 'images/shape1.svg' %}" alt="">
+            <img class="shape2" src="{% static 'images/shape1.svg' %}" alt="">
+            <img class="shape3" src="{% static 'images/shape1.svg' %}" alt="">
+            <img class="shape4" src="{% static 'images/shape1.svg' %}" alt="">
+            <img class="shape5" src="{% static 'images/shape1.svg' %}" alt="">
+        </div>
+<div class="contact-box">
+    <h1>ContactUs</h1>
+{% csrf_token %}
+<form action="contact" method="post">
+{% csrf_token %}
+<input type="text" class="input-field" placeholder="Your Name" name="name">
+<input type="Email" class="input-field" placeholder="Your Email" name="email">
+<input type="text" class="input-field" placeholder="+91 441 321 1432" name="phone">
+<textarea type="text" rows "5" class="input-field" placeholder="Your message" name="query"></textarea>
+<button type="submit" class="btn">SEND</button>
+</form>
+</div>
+{% endblock %}
+</body>
+</html>

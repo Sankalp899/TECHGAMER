@@ -1,0 +1,244 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Dino</title>
+        <style>
+            *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: grid;
+    height: 100vh;
+    place-items: center;
+}
+
+.main{
+    height: 400px;
+    width: 1200px;
+    overflow: hidden;
+    position: relative;
+}
+
+.main .dino{
+    height: 70px;
+    width: 70px;
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+}
+
+.main .dino img{
+    height: 70px;
+    width: 70px;
+}
+
+@keyframes animateDino{
+    0%,100%{
+        bottom: 20px;
+    }
+    45%,55%{
+        bottom: 160px;
+    }
+}
+
+.dinoActive{
+    animation: animateDino 0.5s linear infinite;
+}
+
+.main .stone{
+    height: 80px;
+    width: 125px;
+    position: absolute;
+    bottom: 20px;
+    right: -20px;
+}
+
+.main .stone img{
+    height: 80px;
+    width: 125px;
+}
+
+@keyframes animateStone{
+    0%{
+        right: -125px;
+    }
+    100%{
+        right: 100%;
+    }
+}
+
+.stoneActive{
+    animation: animateStone 2s linear infinite;
+}
+
+.main .road{
+    position: absolute;
+    height: 40px;
+    width: 1200px;
+    bottom: 0;
+    animation: none;
+}
+
+.main .road img{
+    height: 40px;
+    width: 2000px;
+    position: absolute;
+    left: 0;
+}
+
+@keyframes animateRoad{
+    0%{
+        left: 0;
+    }
+    100%{
+        left: -800px;
+    }
+}
+
+.main .cloud{
+    height: 80px;
+    width: 1200px;
+    position: absolute;
+    top: 30px;
+    border-radius: 40px;
+}
+
+.main .cloud img{
+    height: 80px;
+    width: 2000px;
+    position: absolute;
+    left: -2000px;
+    animation: none;
+}
+
+@keyframes animateCloud{
+    0%{
+        left: -2000px;
+    }
+    100%{
+        left: 100%;
+    }
+}
+
+.main .scoreArea{
+    height: auto;
+    width: auto;
+    position: absolute;
+    top: 20px;
+    right: 0;
+}
+
+.main .gameOver{
+    display: none;
+    height: 80px;
+    width: 362px;
+    font-size: 30px;
+    font-weight: bold;
+    left: 529px;
+    top: 220px;
+    color: rgb(12, 14, 12);
+    position: absolute;
+}
+        </style>
+    </head>
+    <body>
+        <div class="main">
+            <div class="dino">
+                <img src="{% static 'images/dino.png' %}">
+            </div>
+            <div class="stone">
+                <img src="{% static 'images/stone.png' %}">
+            </div>
+            <div class="road">
+                <img src="{% static 'images/road.jpg' %}">
+            </div>
+            <div class="cloud">
+                <img src="{% static 'images/cloud.png' %}">
+            </div>
+            <div class="scoreArea">Score:<b></b>00</b></div>
+            <div class="gameOver">Game Over</div>
+        </div>
+    </body>
+    <script>
+        //variables and constants
+let block = document.querySelector('.main');
+let dino = document.querySelector('.dino');
+let stone = document.querySelector('.stone');
+let road = document.querySelector('.road');
+let cloud = document.querySelector('.cloud');
+let score = document.querySelector('.scoreArea');
+let over = document.querySelector('.gameOver');
+const startMusic = new Audio("{% static 'audio/begin.mp3' %}");
+const endMusic = new Audio("{% static 'audio/end.wav' %}");
+
+//declaring variables for score
+let interval = null;
+let playerScore = 0;
+
+//function for score
+let scoreCounter = () =>{
+    playerScore++;
+    score.innerHTML = `Score: <b>${playerScore}</b>`;
+}
+
+//start game
+window.addEventListener('keydown', (start) => {
+    if(start.code == "Space"){
+        startMusic.play();
+        endMusic.pause();
+        over.style.display = "none";
+        stone.classList.add("stoneActive");
+        road.firstElementChild.style.animation = "animateRoad 1.5s linear infinite";
+        cloud.firstElementChild.style.animation = "animateCloud 5s linear infinite";
+        
+        //score update
+        playerScore = 0;
+        interval = setInterval(scoreCounter,200);
+    }
+})
+
+//jump dino
+window.addEventListener('keyup', (e) => {
+    if(e.key == "ArrowUp"){
+        if(dino.classList != "dinoActive"){
+            dino.classList.add("dinoActive");
+
+            //remove class after 0.5s
+            setTimeout(() => {
+                dino.classList.remove("dinoActive");
+            },500)
+        }
+    }
+})
+
+//game over
+let result = setInterval(() => {
+    let dinoBottom = parseInt(getComputedStyle(dino).getPropertyValue("bottom"));
+    let stoneLeft = parseInt(getComputedStyle(stone).getPropertyValue("left"));
+    if(dinoBottom <= 90 && stoneLeft >= 20 && stoneLeft <= 145){
+        play = true;
+        if (typeof endMusic.loop == 'boolean'){
+            endMusic.loop = true;
+        }
+        else{
+            endMusic.addEventListener('ended', function(){
+            this.currentTime = 0;
+            this.play();
+          }, false);
+        }
+        endMusic.play();
+        startMusic.pause();
+        over.style.display = "block";
+        stone.classList.remove("stoneActive");
+        road.firstElementChild.style.animation = "none";
+        cloud.firstElementChild.style.animation = "none";
+        clearInterval(interval);
+        playerScore = 0;
+    }
+},10)
+    </script>
+</html>

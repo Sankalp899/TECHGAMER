@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login</title>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital@1&family=Moon+Dance&family=Mukta:wght@200&family=Oswald:wght@200&family=Pushster&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital,wght@1,300;1,400&family=Moon+Dance&family=Mukta:wght@200&family=Noto+Sans:ital@1&family=Oswald:wght@200&family=PT+Serif:ital@1&family=Pushster&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital,wght@1,300;1,400&family=Moon+Dance&family=Mukta:wght@200&family=Noto+Sans:ital@1&family=Oswald:wght@200&family=PT+Sans:ital@1&family=PT+Serif:ital@1&family=Pushster&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        <style>
+            *{
+                padding: 0;
+                margin: 0;
+            }
+            
+            .outer{
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                position: relative;
+                background-color: #071F30;
+            }
+            .inner{
+                width: 400px;
+                position: absolute;
+                top: 350px;
+                left: 760px;
+                transform: translate(-50%,-50%); 
+                padding: 50px;
+                background: linear-gradient(rgb(160, 75, 75),rgb(49, 111, 170));
+                border-radius: 10px;
+                border-color: yellowgreen;
+                cursor: pointer;
+                overflow: hidden;
+            }
+            h1{
+                font-size: 24px;
+                letter-spacing: 1px;
+                font-weight: bold;
+                margin-top: 10px;
+                margin-bottom: 30px;
+                color: white;
+                text-align: center;
+                text-transform: uppercase;
+                font-family: 'Libre Baskerville', serif;
+            }
+            
+            .inner .info label{
+                position: absolute;
+                top: 0;
+                left: 0;
+                letter-spacing: 1px;
+                padding: 10px;
+                font-size: 16px;
+                color: white;
+                transition: 0.5s;
+                font-family: 'Merriweather', serif;
+            }
+            .inner .info input{
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                color: white;
+                letter-spacing: 1px;
+                margin-bottom: 30px;
+                border:none;
+                border-bottom-color: 2px solid white;
+                background: transparent; 
+                outline: none;
+                font-family: 'PT Serif', serif;
+            }
+            
+            .inner .info{
+                position: relative;
+            }
+            
+            .inner .info input:focus ~ label,
+            .inner .info input:valid ~ label{
+                top: -20px;
+                left: 0;
+                color: red;
+                font-size: 12px;
+            }
+            
+            .inner input[type="submit"]{
+                background: transparent;
+                border:none;
+                outline: none;
+                color: white;
+                background: rgb(19, 87, 34);
+                padding: 8px 16px;
+                border-radius:5px;
+                font-size: 14px;
+                padding-bottom: 10px;
+                font-family: 'Noto Sans', sans-serif;
+                margin-left: 170px;  
+            }
+            .inner input[value="Sign Up"]{
+                margin-left: 15px;
+            }
+            
+            .inner input[type="submit"]:hover{
+                background-color: lightseagreen;
+            }
+            
+            .inner img{
+                height: 120px;
+                margin-left: 150px;
+            }
+        </style>
+    </head>
+    <body>
+        <form action="/signin" method="POST">
+            {% csrf_token %}
+
+        <div class="outer">
+            <div class="inner">
+                <form action="#" method="#">
+                    <img src="{% static 'images/logo.png' %}" id="text">
+                    <h1>Login</h1>
+                    <div class="info">
+                        <input type="text" id="username" name="username" autocomplete="off" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="info">
+                        <input type="password" id="pass1" name="pass1" autocomplete="off" required>
+                        <label>Password</label>
+                    </div>
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

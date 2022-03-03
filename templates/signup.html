@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sign Up</title>
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital@1&family=Moon+Dance&family=Mukta:wght@200&family=Oswald:wght@200&family=Pushster&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital,wght@1,300;1,400&family=Moon+Dance&family=Mukta:wght@200&family=Noto+Sans:ital@1&family=Oswald:wght@200&family=PT+Serif:ital@1&family=Pushster&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital,wght@1,300;1,400&family=Moon+Dance&family=Mukta:wght@200&family=Noto+Sans:ital@1&family=Oswald:wght@200&family=PT+Sans:ital@1&family=PT+Serif:ital@1&family=Pushster&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+<style>
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.main{
+    width: 100vw;
+	height: 1000px;
+	position: relative;
+    background-color: #071F30;
+}
+
+.box{
+    width: 500px;
+	position: absolute;
+	top: 450px;
+	left: 770px;
+	transform: translate(-50%,-50%); 
+	padding: 50px;
+	background: linear-gradient(rgb(160, 75, 75),rgb(49, 111, 170));
+	border-radius: 10px;
+    border-color: rgb(36, 110, 36);
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.box img{
+    height: 170px;
+    margin-left: 170px;
+    top: 0;
+}
+
+.box h1{
+    color: purple;
+    font-family: 'Pushster', cursive;
+    text-align: center;
+    text-transform: uppercase;
+    margin-top: 5px;
+    font-family: 'Libre Baskerville', serif;
+    margin-bottom: 20px;
+}
+
+.box .info label{
+    position: absolute;
+    left: 70px;
+    letter-spacing: 1px;
+    padding: 7px;
+    font-size: 16px;
+    color: white;
+    font-family: 'Merriweather', serif;
+
+}
+
+.box .info input{
+    margin-top: 28px;
+    transform: scale(0.86);
+    width: 80%;
+    padding: 5px;
+    font-size: 16px;
+    color: black;
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+    border:none;
+    border-bottom-color: 2px solid black; 
+    outline: none;
+    font-family: 'PT Serif', serif;
+}
+
+.box input[type="submit"]{
+    background: transparent;
+    border:2px red;
+    margin-top: 10px;
+    outline: none;
+    color: white;
+    background: rgb(151, 40, 40);
+    transform: scale(1.02);
+    padding: 8px 15px;
+    margin-left: 200px;
+    border-radius:5px;
+    font-size: 14px;
+    padding-bottom: 10px;  
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.box input[type="submit"]:hover{
+    background-color: orange;
+}
+</style>
+    </head>
+    <body>
+        <form action="/signup" method="POST">
+            {% csrf_token %}
+        <div class="main">
+            <div class="box">
+                <form>
+                    <img src="{% static 'images/logo.png' %}">
+                    <h1>Sign Up</h1>
+                    <div class="info">
+                        <input type="text" id="username" name="username" required>
+                        <label>Username</label>
+                    </div>
+                    <div class="info">
+                        <input type="text" id="fname" name="fname" required>
+                        <label>First Name</label>
+                    </div>
+                    <div class="info">
+                        <input type="text" id="lname"  name="lname" required>
+                        <label>Last Name</label>
+                    </div>
+                    <div class="info">
+                        <input type="text" id="email" name="email" required>
+                        <label>E-mail</label>
+                    </div>
+                    <div class="info">
+                        <input type="password" id="pass1" name="pass1" required>
+                        <label>Password</label>
+                    </div>
+                    <div class="info">
+                        <input type="password" id="pass2" name="pass2" required>
+                        <label>Re-type Password</label>
+                    </div>
+                    <input type="submit" value="Register">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

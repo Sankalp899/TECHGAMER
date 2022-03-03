@@ -1,0 +1,233 @@
+{% extends 'base.html' %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	{% block title %} TECHGAMES {% endblock %}
+	<link rel="stylesheet" href="{% static 'css/style.css' %}">
+	
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital@1&family=Moon+Dance&family=Mukta:wght@200&family=Oswald:wght@200&family=Pushster&family=Roboto+Condensed:wght@300&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+<style>
+	{% block css %}
+	.common{
+		padding: 130px 0;
+		min-height: 100vh;
+		position: relative;
+	}
+	.home-inner{
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin-top: 20px;
+		
+	}
+	.home .text{
+		max-width: 250px;
+		text-align: right;
+		margin-right: 60px;
+	}
+	.home h5{
+		font-size: 18px;
+		text-transform: uppercase;
+		position: relative;
+	}
+	.home h5:before{
+		content: '';
+		position: absolute;
+		top: 50%;
+		left: 0;
+		width: 60px;
+		height: 1px;
+		background-color: #fff;
+	}
+	.home h1{
+		font-size: 64px;
+		text-transform: uppercase;
+	}
+	.home p{
+		font-size: 18px;
+		line-height: 30px;
+		color: #8d9eaa;
+		margin: 30px 0 60px;
+	}
+	.home .btn{
+		font-size: 18px;
+		color: #fff;
+		text-decoration: none;
+		padding: 15px 20px;
+		border:  1px solid #ffffff40;
+	}
+	.home .btn:hover{
+		background-color: #ffffff40;
+	}
+	.home .btn1{
+		font-size: 18px;
+		color: #fff;
+		text-decoration: none;
+		padding: 15px 20px;
+		border:  1px solid #ffffff40;
+	}
+	.home .btn1:hover{
+		background-color: #ffffff40;
+	}
+
+
+
+	.shape img{
+		position: absolute;
+		width: 100%;
+		z-index: -9;
+	}
+	.shape .shape1{
+		right: -160px;
+		top: -50px;
+		width: 450px;
+		opacity: .5;
+		transform-origin: center;
+		animation: shape linear 30s infinite reverse;
+	}
+	.shape .shape2{
+		left: -70px;
+		bottom: -50px;
+		width: 450px;
+		opacity: .5;
+		transform-origin: center;
+		animation: shape linear 30s infinite reverse;
+	}
+	@keyframes shape{
+		100%{
+			transform:  rotate(360deg);
+		}
+	}
+
+	.shape .shape3{
+		top: 0;
+		left: 0;
+		width: 250px;
+		opacity: .4;
+		transform-origin: center;
+		animation: shape3 linear 20s infinite;
+		transform: translate(-200px, -100px) rotate(0deg);
+	}
+	@keyframes shape3{
+		100%{
+			transform: translate(1300px, 600px) rotate(360deg);
+		}	
+	}
+
+	.shape .shape4{
+		left: 0;
+		bottom: 0;
+		width: 150px;
+		opacity: .4;
+		transform-origin: center;
+		animation: shape4 linear 20s infinite 5s;
+		transform: translate(700px, 80px) rotate(0deg);
+	}
+	@keyframes shape4{
+		100%{
+			transform: translate(1200px, -800px) rotate(360deg);
+		}
+	}
+
+	.shape .shape5{
+		left: 500px;
+		top: 0;
+		width: 100px;
+		opacity: 0;
+		transform-origin: center;
+		animation: shape5 linear 25s infinite;
+		transform: translate(0, -150px) rotate(0deg);
+	}
+	@keyframes shape5{
+		100%{
+			opacity: 1;
+			transform: translate(0, 800px) rotate(720deg);
+		}
+	}
+
+	@media screen and (max-width: 750px) {
+		div#list{
+			display: none;
+		}
+		div#open{
+			display: flex;
+		}
+		
+	}
+	.img 
+	{
+		height: 300px;
+		box-shadow: 0 0 70px 0 #999;
+	}
+
+    .usrname{
+		font-size: 40px;
+		text-align: center;
+		margin-top: 40px;
+		font-family: 'Libre Baskerville', serif;
+	}
+{% endblock %}
+</style>
+</head>
+<body>
+	{% block content %}
+<div class="usrname">Welcome {{name}}</div>
+<section class="home common">
+	<div class="shape">
+		<img class="shape1" src="{% static 'images/shape1.svg' %}" alt="">
+		<img class="shape2" src="{% static 'images/shape1.svg' %}" alt="">
+		<img class="shape3" src="{% static 'images/shape1.svg' %}" alt="">
+		<img class="shape4" src="{% static 'images/shape1.svg' %}" alt="">
+		<img class="shape5" src="{% static 'images/shape1.svg' %}" alt="">
+	</div>
+
+	<div class="home-inner">
+		<div class="text">
+			<h5>GAMES</h5>
+			<h1>FUN WITH GAMES</h1>
+			<p> </p>
+
+            {% if user.is_authenticated %}
+            <a href="/signout" class="btn">LOGOUT</a>
+            {% else %}
+            <a href="/signup" class="btn">SIGN UP</a>
+            <a href="/signin" class="btn">LOGIN</a>
+            {% endif %}
+		</div>
+		<div class="img">
+			<img src="{% static 'images/img3.gif' %}" alt="">
+		</div>
+	</div>
+</section>
+{% endblock %}
+<script>
+	function openMenu(){
+		document.getElementById('navbar2').style.display="flex";
+		document.getElementById('navbar').style.display="none";
+		document.getElementById('close').style.display="flex";
+		document.getElementById('open').style.display="none";
+	}
+	
+	function closeMenu(){
+		document.getElementById('navbar2').style.display="none";
+		document.getElementById('navbar').style.display="flex";
+		document.getElementById('close').style.display="none";
+		if(screen.width >750){
+			document.getElementById('open').style.display="none";
+			console.log('close')
+		}
+		else{
+			document.getElementById('open').style.display="flex";
+			console.log('open');
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+{%load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Scramle Dumble</title>
+        <link rel="stylesheet" href="style.css">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital@1&family=Moon+Dance&family=Pushster&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital@1&family=Moon+Dance&family=Pushster&family=Roboto+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital@1&family=Moon+Dance&family=Oswald:wght@200&family=Pushster&family=Roboto+Condensed:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital@1&family=Merriweather:ital@1&family=Moon+Dance&family=Mukta:wght@200&family=Oswald:wght@200&family=Pushster&family=Roboto+Condensed:wght@300&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.header{
+    overflow: hidden;
+    width: 100%;
+    font-weight: bold;
+    line-height: 15vh;
+     background-image: radial-gradient(circle, rgb(70, 131, 180), rgb(55, 85, 114), rgb(16, 45, 75));
+}
+h1{
+    text-align: center;
+    color: black;
+    font-family: 'Libre Baskerville', serif;
+    text-transform: uppercase;
+    font-size: 2.2rem;
+    letter-spacing: 15px;
+    text-shadow: 0 1px #9be46be1,
+                 0 2px #90e76d,
+                 0 3px #a4e65a,
+                 0 4px #8ddb69,
+                 0 30px 5px rgba(0,0,0,.1);
+}
+.section{
+    overflow: hidden;
+    height: 85vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     background-image: radial-gradient(circle, rgb(70, 131, 180), rgb(55, 85, 114), rgb(16, 45, 75));
+}
+.gameArea{
+    width: 50%;
+    height: 400px;
+    padding: 20px,0;
+    overflow: hidden;
+    font-family: Verdana;
+    background: linear-gradient(rgb(127, 175, 16),rgb(132, 148, 13));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 8px 6px -6px black;
+}
+h3{
+    text-align: center;
+    font-size: 1.7rem;
+}
+input{
+    width: 40%;
+    padding: 15px 0;
+    text-align: center;
+    border-radius: 25px;
+    outline: none;
+    border: none;
+    background-color: rgb(247, 235, 235);
+    color: black;
+    margin: 2rem 0;
+    font-size: 1.4rem;
+}
+.btn{
+    cursor: pointer;
+    font-weight: 600;
+    padding: 1rem 2rem;
+    margin-top: 15px;
+    font-family: 'Merriweather', serif;
+    background: rgb(207, 117, 14);
+    text-transform: uppercase;
+    transition-property: all;
+    transition-duration: 0.5s;
+    transition-timing-function: cubic-bezier(0.65,-9.25,0.25,1.95);
+}
+button.btn:hover,button.btn:focus,button.btn:active{
+    letter-spacing: -.125rem;
+    word-spacing: 0.2rem;
+    background-color: rgb(15, 131, 15);
+}
+.hidden{
+    display: none;
+}
+
+</style>
+    </head>
+    <body>
+        <div class="header">
+            <h1>Guess The Word</h1>
+        </div>
+        <div class="section">
+            <div class="gameArea">
+                <input type="text" class="hidden">
+                <h3 class="msg"></h3>
+                <button class="btn">Click Here To Start</button>
+            </div>
+        </div>        
+    </body>
+    <script>
+const msg = document.querySelector('.msg');
+const guess = document.querySelector('input');
+const btn = document.querySelector('.btn');
+const music = new Audio("{% static 'audio/startMusic.mp3'%}");
+const sMusic = new Audio("{% static 'audio/success.mp3'%}");
+const fMusic = new Audio("{%static 'audio/fail.mp3'%}");
+const scrArea = document.getAnimations('.scoreArea');
+let score = 0;
+let play = false;
+let newWords = "";
+let randWords = ";"
+let wordsArr = ['about', 'above', 'across', 'act', 'active', 'activity', 'add', 'afraid', 'after', 'again', 'age', 
+'ago', 'agree', 'air', 'all', 'alone', 'along', 'already', 'always', 'am', 'amount', 'an', 'and', 'angry', 'another',
+'answer', 'any', 'anyone', 'anything', 'anytime', 'appear', 'apple', 'are', 'area', 'arm', 'army', 'around', 'arrive',
+'art', 'as', 'ask', 'at', 'attack', 'aunt', 'away','back', 'bad', 'bag', 'ball', 'bank', 'base', 'basket', 'bath', 'be', 'bean', 'bear',
+'beautiful', 'bed', 'bedroom', 'beer', 'behave', 'before', 'begin', 'behind', 'bell', 'below', 'besides', 'best', 'better', 'between', 'big',
+'bird', 'birth', 'birthday', 'bit', 'bite', 'black', 'bleed', 'block', 'blood', 'blow', 'blue', 'board', 'boat', 'body', 'boil', 'bone', 'book',
+'border', 'born', 'borrow', 'both', 'bottle', 'bottom', 'bowl', 'box', 'boy', 'branch', 'brave', 'bread', 'break', 'breakfast', 'breathe',
+'bridge', 'bright', 'bring', 'brother', 'brown', 'brush', 'build', 'burn', 'business', 'bus', 'busy', 'but', 'buy', 'by',
+'call', 'can', 'candle', 'cap', 'car', 'card', 'care', 'careful', 'careless', 'carry', 'case', 'cat', 'catch', 'central', 'century', 'certain',
+'chair', 'chance', 'change', 'chase', 'cheap', 'cheese', 'chicken', 'child', 'children', 'chocolate', 'choice', 'choose', 'circle', 'city',
+'class', 'clever', 'clean', 'clear', 'climb', 'clock', 'cloth', 'clothes', 'cloud', 'cloudy', 'close', 'coffee', 'coat', 'coin', 'cold', 'collect',
+'colour', 'comb', 'comfortable', 'common', 'compare', 'come', 'complete', 'computer', 'condition', 'continue', 'control', 'cook', 'cool',
+'copper', 'corn', 'corner', 'correct', 'cost', 'contain', 'count', 'country', 'course', 'cover', 'crash', 'cross', 'cry', 'cup', 'cupboard', 'cut',
+'dangerous', 'dark', 'daughter', 'day', 'dead', 'decide', 'decrease', 'deep', 'deer', 'depend', 'desk', 'destroy', 'develop', 'die', 'different',
+'difficult', 'dinner', 'direction', 'dirty', 'discover', 'dish', 'do', 'dog', 'door', 'double', 'down', 'draw', 'dream', 'dress', 'drink', 'drive',
+'drop', 'dry', 'duck', 'dust', 'duty', 'ear', 'early', 'earn', 'earth', 'east', 'easy', 'eat', 'education', 'effect', 'egg', 'eight',
+'either', 'electric', 'elephant', 'else', 'empty', 'end', 'enemy', 'enjoy', 'enough', 'enter', 'equal', 'entrance', 'escape', 'even', 'evening', 
+'ever', 'every', 'everyone', 'exact', 'everybody', 'examination', 'example', 'except', 'excited', 'exercise', 'expect', 'expensive',
+'explain', 'extremely', 'eye', 'fact', 'fail', 'fall', 'false', 'family', 'famous', 'far', 'farm', 'father', 'fast', 'fat', 'fault', 'fear',
+'feed', 'feel', 'female', 'fever', 'few', 'fight', 'fill', 'film', 'find', 'fine', 'finger', 'finish', 'fire', 'first', 'fish', 'fit', 'five', 'fix', 
+'flag', 'flat', 'float', 'floor', 'flour', 'flower', 'fly', 'fold', 'food', 'fool', 'foot', 'football', 'for', 'force', 'foreign', 'forest', 'forget',
+'forgive', 'fork', 'form', 'fox', 'four', 'free', 'freedom', 'freeze', 'fresh', 'friend', 'friendly', 'from', 'front', 'fruit', 'full', 'fun', 'funny',
+'furniture', 'further', 'future', 'garden', 'gate', 'general', 'gentleman', 'get', 'gift', 'give', 'glad', 'glass', 'go', 'goat', 'god',
+'gold', 'good', 'goodbye', 'grandfather', 'grandmother', 'grass', 'grave', 'great', 'green', 'gray', 'ground', 'group', 'grow', 'gun',
+'half', 'hall', 'hammer', 'hand', 'happen', 'happy', 'hard', 'hat', 'hate', 'have', 'he', 'head', 'healthy', 'hear', 'heavy', 'heart', 'heaven',
+'height', 'hello', 'help', 'hen', 'her', 'here', 'hers', 'hide', 'high', 'hill', 'him', 'his', 'hit', 'hobby', 'hold', 'hole', 'holiday', 'home', 'hope',
+'horse', 'hospital', 'hot', 'hotel', 'house', 'how', 'hundred', 'hungry', 'hour', 'hurry', 'husband', 'hurt', 'idea',
+'if', 'important', 'in', 'increase', 'inside', 'into', 'introduce', 'invent', 'iron', 'invite', 'is', 'island', 'it', 'its',
+'job', 'join', 'juice', 'jump', 'just', 'key', 'kill', 'kind', 'king', 'kitchen', 'knee', 'knife', 'knock', 'know', 'lady', 'lamp', 'land', 'large', 'last',
+'late', 'lately', 'laugh', 'lazy', 'lead', 'leaf', 'learn', 'leave', 'leg', 'left', 'lend', 'length', 'less', 'lesson', 'let', 'letter', 'library',
+'lie', 'life', 'light', 'like', 'lion', 'lip', 'list', 'listen', 'little', 'live', 'lock', 'lonely', 'long', 'look', 'lose', 'lot', 'love', 'low',
+'lower', 'luck', 'main', 'make', 'male', 'man', 'many', 'map', 'mark', 'market', 'marry', 'matter', 'may', 'me', 'meal', 'mean', 'measure',
+'meat', 'medicine', 'meet', 'member', 'mention', 'method', 'middle', 'milk', 'million', 'mind', 'minute', 'miss', 'mistake', 'mix', 'model',
+'modern', 'moment', 'money', 'monkey', 'month', 'moon', 'more', 'morning', 'most', 'mother', 'mountain', 'mouth', 'move', 'much', 'music', 'must',
+'my', 'narrow', 'nation', 'nature', 'near', 'nearly', 'neck', 'need', 'needle', 'neighbour', 'neither', 'net', 'never', 'new', 'news', 'newspaper',
+'next', 'nice', 'night', 'nine', 'no', 'noble', 'noise', 'none', 'nor', 'north', 'nose', 'not', 'nothing', 'notice', 'now', 'number', 'object',
+'ocean', 'of', 'off', 'offer', 'office', 'often', 'oil', 'old', 'on', 'one', 'only', 'open', 'opposite', 'or', 'orange', 'order', 'other', 'our', 'out',
+'outside', 'over', 'own', 'pain', 'paint', 'pair', 'pan', 'paper', 'parent', 'park', 'part', 'partner', 'party', 'pass', 'past', 'path', 'pay',
+'peace', 'pen', 'pencil', 'people', 'pepper', 'per', 'perfect', 'period', 'person', 'petrol', 'photograph', 'piano', 'pick', 'picture', 'piece',
+'pig', 'pin', 'pink', 'place', 'plane', 'plant', 'plastic', 'plate', 'play', 'please', 'pleased', 'plenty', 'pocket', 'point', 'poison', 'police',
+'polite', 'pool', 'poor', 'popular', 'position', 'possible', 'potato', 'pour', 'power', 'present', 'press', 'pretty', 'prevent', 'price', 'prince',
+'prison', 'private', 'prize', 'probably', 'problem', 'produce', 'promise', 'proper', 'protect', 'provide', 'public', 'pull', 'punish', 'pupil',
+'push', 'put', 'question', 'quick', 'quiet', 'quite', 'rain', 'rainy', 'raise', 'reach', 'read', 'ready', 'real', 'really', 'receive', 'record',
+'red', 'remember', 'remind', 'remove', 'rent', 'repair', 'repeat', 'reply', 'report', 'rest', 'restaurant', 'result', 'return', 'rice', 'rich',
+'ride', 'right', 'ring', 'rise', 'road', 'rob', 'rock', 'room', 'round', 'rubber', 'rude', 'rule', 'ruler', 'run', 'rush', 
+'safe', 'sail', 'salt', 'same', 'sand', 'save', 'say', 'school', 'science', 'scissors', 'search', 'seat', 'second', 'see', 'seem', 'sell', 'send', 
+'sentence', 'serve', 'seven', 'several', 'sex', 'shade', 'shadow', 'shake', 'shape', 'share', 'sharp', 'she', 'sheep', 'sheet', 'shelf', 'shine', 
+'ship', 'shirt', 'shoe', 'shoot', 'shop', 'short', 'should', 'shoulder', 'shout', 'show', 'sick', 'side', 'signal', 'silence', 'silly', 'silver', 
+'similar', 'simple', 'single', 'since', 'sing', 'sink', 'sister', 'sit', 'six', 'size', 'skill', 'skin', 'skirt', 'sky', 'sleep', 'slip', 'slow', 
+'small', 'smell', 'smile', 'smoke', 'snow', 'so', 'soap', 'sock', 'soft', 'some', 'someone', 'something', 'sometimes', 'son', 'soon', 'sorry', 'sound', 
+'soup', 'south', 'space', 'speak', 'special', 'speed', 'spell', 'spend', 'spoon', 'sport', 'spread', 'spring', 'square', 'stamp', 'stand', 'star', 
+'start', 'station', 'stay', 'steal', 'steam', 'step', 'still', 'stomach', 'stone', 'stop', 'store', 'storm', 'story', 'strange', 'street', 'strong', 
+'structure', 'student', 'study', 'stupid', 'subject', 'substance', 'successful', 'such', 'sudden', 'sugar', 'suitable', 'summer', 'sun', 'sunny', 
+'support', 'sure', 'surprise', 'sweet', 'swim', 'sword', 'table', 'take', 'talk', 'tall', 'taste', 'taxi', 'tea', 'teach', 'team',
+'tear', 'telephone', 'television', 'tell', 'ten', 'tennis', 'terrible', 'test', 'than', 'that', 'the', 'their', 'then', 'there', 'therefore', 
+'these', 'thick', 'thin', 'thing', 'think', 'third', 'this', 'though', 'threat', 'three', 'tidy', 'tie', 'title', 'to', 'today', 'toe', 'together', 
+'tomorrow', 'tonight', 'too', 'tool', 'tooth', 'top', 'total', 'touch', 'town', 'train', 'tram', 'travel', 'tree', 'trouble', 'true', 'trust', 
+'twice', 'try', 'turn', 'type', 'ugly', 'uncle', 'under', 'understand', 'unit', 'until', 'up', 'use', 'useful', 'usual', 'usually', 'vegetable', 
+'very', 'village', 'voice', 'visit', 'wait', 'wake', 'walk', 'want', 'warm', 'was', 'wash', 'waste', 'watch', 'water', 'way', 'we', 'weak', 'wear', 
+'weather', 'wedding', 'week', 'weight', 'welcome', 'were', 'well', 'west', 'wet', 'what', 'wheel', 'when', 'where', 'which', 'while', 'white', 
+'who', 'why', 'wide', 'wife', 'wild', 'will', 'win', 'wind', 'window', 'wine', 'winter', 'wire', 'wise', 'wish', 'with', 'without', 'woman', 'wonder', 
+'word', 'work', 'world', 'worry', 'yard', 'yell', 'yesterday', 'yet', 'you', 'young', 'your', 'zero', 'zoo'];
+
+const createWords = () => {
+    let randomWords = Math.floor(Math.random() * wordsArr.length);
+    let tempWord = wordsArr[randomWords];
+    return tempWord;
+}
+
+const scrambleWords = (arr) => {
+    for(let i = arr.length; i>0; i--){
+        let temp = arr[i];
+        let j = Math.floor(Math.random()*(i+1));
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+    return arr;
+}
+
+btn.addEventListener('click', function(){
+    if(!play){
+        play = true;
+        if (typeof music.loop == 'boolean'){
+            music.loop = true;
+        }
+        else{
+            music.addEventListener('ended', function(){
+            this.currentTime = 0;
+            this.play();
+          }, false);
+        }
+        music.play();
+        sMusic.pause();
+        fMusic.pause();
+        btn.innerHTML= "Guess";
+        guess.classList.toggle('hidden');
+        newWords = createWords();
+        randWords = scrambleWords(newWords.split("")).join("");
+        msg.innerHTML = `Guess The Word : ${randWords}`;
+    }
+    else{
+        let tempVar = guess.value;
+        if(tempVar == newWords){
+            if (typeof sMusic.loop == 'boolean'){
+                sMusic.loop = true;
+            }
+            else{
+                sMusic.addEventListener('ended', function(){
+                this.currentTime = 0;
+                this.play();
+              }, false);
+            }
+            sMusic.play();
+            music.pause();
+            fMusic.pause();
+            score = score + 1;
+            //console.log(score);
+            play = false;
+            msg.innerHTML = `Wow...It's Correct!! It's ${newWords}`;
+            btn.innerHTML = "Next";       
+            guess.classList.toggle('hidden');
+            guess.value = "";
+        }
+        else{
+            fMusic.play();
+            music.pause();
+            sMusic.pause();
+            score = 0;
+            alert("Ohh No!! It's Incorrect!! Please try Again");
+            play = false;
+            btn.innerHTML = "Start Again";
+            guess.classList.toggle('hidden');
+            guess.value = "";
+        }
+    }
+});
+//https://simple.wikipedia.org/wiki/Wikipedia:List_of_1000_basic_words
+</script>
+</html>
